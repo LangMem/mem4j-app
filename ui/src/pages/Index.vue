@@ -33,4 +33,3 @@ body,
   background: linear-gradient(rgb(62, 255, 225), rgb(19, 255, 247))
   height: 28vh
 </style>
-

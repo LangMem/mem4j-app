@@ -1,7 +1,8 @@
 <template>
     <div>
         <div>
-            <a href="#"><el-image src="src/assets/logo.png"></el-image></a>
+            <!-- todo: 替换 logo -->
+            <a href="#"><el-image src="/public/vite.svg"></el-image></a>
         </div>
         <div class="title">
             <el-menu default-active="2" class="el-menu-vertical-demo" router>
@@ -16,29 +17,12 @@
             </el-menu>
         </div>
     </div>
-    <div class="right">
-        <el-button @click="logout" type="primary">退出登录</el-button>
-        <el-icon>
-            <ArrowRight />
-        </el-icon>
-    </div>
 </template>
 
 <script setup lang="ts">
 import { useRouter } from "vue-router";
-import {
-    ArrowRight
-} from '@element-plus/icons-vue'
 
 const router = useRouter();
-
-const logout = () => {
-    console.log("logout");
-
-    localStorage.removeItem("token")
-    router.push("/login")
-}
-
 </script>
   
 <style lang="scss" scoped>

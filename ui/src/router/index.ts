@@ -2,7 +2,6 @@
 // RouteRecordRaw 用于规范路由规则，增强路由对象类型限制
 // createWebHashHistory 用于使用路由实例，指定路由的工作模式（hash）
 import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
-import { ElMessage } from 'element-plus'
 
 import {
     Files
@@ -69,6 +68,7 @@ router.beforeEach(async (to, from, next) => {
     //     return next({ path: from.path ? from.path : '/login' })
     // }
 
+    console.log(to, from)
     next()
 })
 

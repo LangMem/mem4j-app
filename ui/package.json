@@ -1,8 +1,9 @@
 {
-  "name": "minio-file-serve-frontend",
+  "name": "mem4j-frontend",
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "license": "Apache-2.0",
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc && vite build",

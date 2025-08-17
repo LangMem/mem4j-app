@@ -3,16 +3,16 @@
         <div class="content">
             <div class="licontent">
                 <ul>
-                    <h5>vue模板</h5>
+                    <h5>Mem4j</h5>
                     <br>
-                    <p class="pcontent">Vue 开发模板</p>
+                    <p class="pcontent">Mem4j</p>
                 </ul>
             </div>
             <div class="licontent">
                 <ul>
                     <h5>开发</h5>
                     <li>
-                        <el-link href="https://github.com/ldxy-arthas/vue3-vite-ts-pinia-env.git"
+                        <el-link href="https://github.com/LangMem/mem4j"
                             target="_blank">开源</el-link>
                         <br />
                     </li>
@@ -31,7 +31,7 @@
                 </ul>
             </div>
         </div>
-        <p class="copyright">CpoyRight@Arthas by yuluo</p>
+        <p class="copyright">CpoyRight@Arthas by Mem5j Org</p>
     </div>
 </template>
   
