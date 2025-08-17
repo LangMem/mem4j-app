@@ -14,7 +14,67 @@
     <artifactId>mem4j-app</artifactId>
     <name>Mem4j Application</name>
     <description>Main Spring Boot application for Mem4j</description>
-
+    <licenses>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+    
+    <scm>
+        <connection>scm:git:https://github.com/langMem/mem4j-app.git</connection>
+        <developerConnection>scm:git:https://github.com/langMem/mem4j-app.git</developerConnection>
+        <url>https://github.com/langMem/mem4j-app</url>
+    </scm>
+    
+    <issueManagement>
+        <system>Github Issues</system>
+        <url>https://github.com/langMem/mem4j-app/issues</url>
+    </issueManagement>
+    <ciManagement>
+        <system>Github Actions</system>
+        <url>https://github.com/langMem/mem4j-app/actions</url>
+    </ciManagement>
+    
+    <developers>
+        <developer>
+            <name>Aias00</name>
+            <email>liuhongyu@apache.org</email>
+            <url>https://github.com/Aias00</url>
+        </developer>
+        <developer>
+            <name>Shown</name>
+            <email>shown@apache.org</email>
+            <url>https://github.com/yuluo-yx</url>
+        </developer>
+    </developers>
+    
+    <properties>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <spring.boot.version>3.2.0</spring.boot.version>
+        <spring.version>6.1.1</spring.version>
+        <jackson.version>2.15.3</jackson.version>
+        <openai.version>0.12.0</openai.version>
+        
+        <!-- Vector Store versions -->
+        <qdrant.version>1.13.0</qdrant.version>
+        <elasticsearch.version>8.11.0</elasticsearch.version>
+        <weaviate.version>5.4.0</weaviate.version>
+        <neo4j.version>5.28.9</neo4j.version>
+        
+        <!-- Test versions -->
+        <junit.version>5.10.0</junit.version>
+        <mockito.version>5.7.0</mockito.version>
+        <slf4j.version>2.0.9</slf4j.version>
+        <logback.version>1.4.11</logback.version>
+        
+        <spring-ai-alibaba.version>1.0.0.2</spring-ai-alibaba.version>
+        <mem4j.version>0.1.0</mem4j.version>
+    </properties>
+    
     <dependencies>
         <!-- Spring Boot Starters -->
         <dependency>
@@ -38,10 +98,32 @@
         <dependency>
             <groupId>com.github.mem4j</groupId>
             <artifactId>mem4j-spring-boot-starter</artifactId>
-            <version>${project.version}</version>
+            <version>${mem4j.version}</version>
         </dependency>
     </dependencies>
-
+    
+    <dependencyManagement>
+        <dependencies>
+            <!-- Spring Boot BOM -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring.boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            
+            <!-- Spring AI Alibaba BOM -->
+            <dependency>
+                <groupId>com.alibaba.cloud.ai</groupId>
+                <artifactId>spring-ai-alibaba-bom</artifactId>
+                <version>${spring-ai-alibaba.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+    
     <build>
         <plugins>
             <plugin>

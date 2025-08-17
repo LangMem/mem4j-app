@@ -1,0 +1,131 @@
+# Copyright 2024-2026 the original author or authors.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# Production environment override
+# Usage: docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d
+
+services:
+  mem4j:
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+      - LOGGING_LEVEL_ROOT=WARN
+      - LOGGING_LEVEL_COM_GITHUB_MEM4J=INFO
+      - JAVA_OPTS=-Xmx2g -Xms1g -XX:+UseG1GC -XX:+UseContainerSupport -XX:MaxRAMPercentage=75.0 -XX:+ExitOnOutOfMemoryError -Djava.security.egd=file:/dev/./urandom
+    deploy:
+      resources:
+        limits:
+          memory: 2.5G
+          cpus: '2.0'
+        reservations:
+          memory: 1G
+          cpus: '1.0'
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+        delay: 10s
+        max_attempts: 3
+    # Don't expose debug port in production
+    # Don't mount source code in production
+
+  postgres:
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+          cpus: '1.0'
+        reservations:
+          memory: 512M
+          cpus: '0.5'
+    # Additional production optimizations
+    command: >
+      postgres
+      -c max_connections=100
+      -c shared_buffers=256MB
+      -c effective_cache_size=1GB
+      -c maintenance_work_mem=64MB
+      -c checkpoint_completion_target=0.9
+      -c wal_buffers=16MB
+      -c default_statistics_target=100
+
+  neo4j:
+    environment:
+      - NEO4J_AUTH=neo4j/${NEO4J_PASSWORD}
+      - NEO4J_dbms_memory_heap_initial_size=1g
+      - NEO4J_dbms_memory_heap_max_size=2g
+      - NEO4J_dbms_memory_pagecache_size=512m
+      - NEO4J_dbms_transaction_timeout=30s
+      - NEO4J_dbms_security_procedures_unrestricted=apoc.*
+      - NEO4J_dbms_logs_gc_enabled=true
+    deploy:
+      resources:
+        limits:
+          memory: 2.5G
+          cpus: '1.5'
+        reservations:
+          memory: 1G
+          cpus: '0.5'
+
+  qdrant:
+    environment:
+      - QDRANT__LOG_LEVEL=WARN
+      - QDRANT__STORAGE__PERFORMANCE__MAX_SEARCH_THREADS=8
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+          cpus: '1.0'
+        reservations:
+          memory: 1G
+          cpus: '0.5'
+
+# Production monitoring stack (optional)
+x-monitoring: &monitoring
+  monitoring:
+    prometheus:
+      image: prom/prometheus:v2.45.0
+      container_name: mem4j-prometheus
+      restart: unless-stopped
+      ports:
+        - "9090:9090"
+      volumes:
+        - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+        - prometheus_data:/prometheus
+      networks:
+        - mem4j-network
+      profiles:
+        - monitoring
+
+    grafana:
+      image: grafana/grafana:10.0.0
+      container_name: mem4j-grafana
+      restart: unless-stopped
+      ports:
+        - "3000:3000"
+      environment:
+        - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PASSWORD:-admin}
+      volumes:
+        - grafana_data:/var/lib/grafana
+        - ./monitoring/grafana:/etc/grafana/provisioning:ro
+      networks:
+        - mem4j-network
+      profiles:
+        - monitoring
+
+volumes:
+  prometheus_data:
+  grafana_data:

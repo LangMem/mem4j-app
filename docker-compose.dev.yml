@@ -1,0 +1,72 @@
+# Copyright 2024-2026 the original author or authors.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# Development environment override
+# Usage: docker-compose -f docker-compose.yml -f docker-compose.dev.yml up
+
+services:
+  mem4j:
+    environment:
+      - SPRING_PROFILES_ACTIVE=dev
+      - LOGGING_LEVEL_COM_GITHUB_MEM4J=DEBUG
+      - LOGGING_LEVEL_ROOT=INFO
+      - SPRING_JPA_SHOW_SQL=true
+      - SPRING_JPA_PROPERTIES_HIBERNATE_FORMAT_SQL=true
+    volumes:
+      - ./src:/app/src:ro  # Mount source for hot reload (if using dev tools)
+      - ./logs:/app/logs
+      - ./config:/app/config:ro
+    ports:
+      - "8080:8080"
+      - "5005:5005"  # Debug port
+    command: ["sh", "-c", "java $JAVA_OPTS -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005 -jar /app/mem4j-app.jar"]
+
+  postgres:
+    environment:
+      - POSTGRES_DB=mem4j_dev
+      - POSTGRES_USER=mem4j_dev
+      - POSTGRES_PASSWORD=dev_password
+    ports:
+      - "5432:5432"
+
+  neo4j:
+    environment:
+      - NEO4J_AUTH=neo4j/dev_password
+      - NEO4J_dbms_memory_heap_initial_size=256m
+      - NEO4J_dbms_memory_heap_max_size=512m
+      - NEO4J_dbms_memory_pagecache_size=128m
+    ports:
+      - "7474:7474"
+      - "7687:7687"
+
+  qdrant:
+    environment:
+      - QDRANT__LOG_LEVEL=DEBUG
+    ports:
+      - "6333:6333"
+      - "6334:6334"
+
+  # Add additional development tools
+  adminer:
+    image: adminer:4.8.1
+    container_name: mem4j-adminer
+    restart: unless-stopped
+    ports:
+      - "8082:8080"
+    environment:
+      - ADMINER_DEFAULT_SERVER=postgres
+    networks:
+      - mem4j-network
+    depends_on:
+      - postgres
