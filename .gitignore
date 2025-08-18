@@ -187,3 +187,6 @@ qdrant_storage/
 .crossnote
 testing.ipynb
 checkstyle-report.xml
+.DS_Store
+src/.DS_Store
+src/main/.DS_Store
