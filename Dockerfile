@@ -66,9 +66,9 @@ USER mem4j
 # Expose port
 EXPOSE 8080
 
-# Health check
+# Health check (using memory search endpoint since no actuator)
 HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
-    CMD curl -f http://localhost:8080/api/v1/actuator/health || exit 1
+    CMD curl -f "http://localhost:8080/api/v1/memory/search?query=health&userId=health&limit=1" || exit 1
 
 # Set JVM options for better performance and monitoring
 ENV JAVA_OPTS="-Xmx512m -Xms256m \

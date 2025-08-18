@@ -115,12 +115,14 @@ cp docker-compose.override.yml.example docker-compose.override.yml
 
 All services include health checks:
 
-- **mem4j**: `/api/v1/actuator/health`
+- **mem4j**: `/api/v1/memory/search?query=test&userId=health` (fallback endpoint)
 - **postgres**: `pg_isready`
 - **neo4j**: `cypher-shell`
 - **qdrant**: `/health`
 - **elasticsearch**: `/_cluster/health`
 - **weaviate**: `/v1/.well-known/ready`
+
+Note: The application doesn't currently include Spring Boot Actuator, so health checks use the memory API endpoint.
 
 ## Resource Limits
 

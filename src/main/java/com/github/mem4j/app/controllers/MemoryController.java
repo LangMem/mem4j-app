@@ -56,8 +56,7 @@ public class MemoryController {
 							: MemoryType.FACTUAL);
 
 			return ResponseEntity.ok(Map.of("status", "success", "message", "Memories added successfully"));
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 
 			logger.error("Error adding memories", e);
 			return ResponseEntity.badRequest().body(Map.of("status", "error", "message", e.getMessage()));
@@ -68,16 +67,17 @@ public class MemoryController {
 	 * Search for relevant memories
 	 */
 	@GetMapping("/search")
-	public ResponseEntity<Map<String, Object>> searchMemories(@RequestParam String query, @RequestParam String userId,
-			@RequestParam(defaultValue = "10") int limit, @RequestParam(required = false) Double threshold,
+	public ResponseEntity<Map<String, Object>> searchMemories(@RequestParam("query") String query,
+			@RequestParam("userId") String userId,
+			@RequestParam(value = "limit", defaultValue = "10") int limit,
+			@RequestParam(value = "threshold", required = false) Double threshold,
 			@RequestParam Map<String, Object> filters) {
 
 		try {
 			List<MemoryItem> results = memory.search(query, userId, filters, limit, threshold);
 
 			return ResponseEntity.ok(Map.of("status", "success", "results", results, "count", results.size()));
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			logger.error("Error searching memories", e);
 			return ResponseEntity.badRequest().body(Map.of("status", "error", "message", e.getMessage()));
 		}
@@ -87,15 +87,14 @@ public class MemoryController {
 	 * Get all memories for a user
 	 */
 	@GetMapping("/all")
-	public ResponseEntity<Map<String, Object>> getAllMemories(@RequestParam String userId,
-			@RequestParam(defaultValue = "100") int limit, @RequestParam Map<String, Object> filters) {
+	public ResponseEntity<Map<String, Object>> getAllMemories(@RequestParam("userId") String userId,
+			@RequestParam(value = "limit", defaultValue = "100") int limit, @RequestParam Map<String, Object> filters) {
 
 		try {
 			List<MemoryItem> results = memory.getAll(userId, filters, limit);
 
 			return ResponseEntity.ok(Map.of("status", "success", "results", results, "count", results.size()));
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			logger.error("Error getting all memories", e);
 			return ResponseEntity.badRequest().body(Map.of("status", "error", "message", e.getMessage()));
 		}
@@ -112,12 +111,10 @@ public class MemoryController {
 
 			if (item != null) {
 				return ResponseEntity.ok(Map.of("status", "success", "memory", item));
-			}
-			else {
+			} else {
 				return ResponseEntity.notFound().build();
 			}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			logger.error("Error getting memory: {}", memoryId, e);
 
 			return ResponseEntity.badRequest().body(Map.of("status", "error", "message", e.getMessage()));
@@ -135,8 +132,7 @@ public class MemoryController {
 			memory.update(memoryId, data);
 
 			return ResponseEntity.ok(Map.of("status", "success", "message", "Memory updated successfully"));
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			logger.error("Error updating memory: {}", memoryId, e);
 			return ResponseEntity.badRequest().body(Map.of("status", "error", "message", e.getMessage()));
 		}
@@ -152,8 +148,7 @@ public class MemoryController {
 			memory.delete(memoryId);
 
 			return ResponseEntity.ok(Map.of("status", "success", "message", "Memory deleted successfully"));
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 
 			logger.error("Error deleting memory: {}", memoryId, e);
 			return ResponseEntity.badRequest().body(Map.of("status", "error", "message", e.getMessage()));
@@ -170,8 +165,7 @@ public class MemoryController {
 			memory.deleteAll(userId);
 
 			return ResponseEntity.ok(Map.of("status", "success", "message", "All memories deleted successfully"));
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 
 			logger.error("Error deleting all memories for user: {}", userId, e);
 			return ResponseEntity.badRequest().body(Map.of("status", "error", "message", e.getMessage()));
@@ -188,8 +182,7 @@ public class MemoryController {
 			memory.reset();
 
 			return ResponseEntity.ok(Map.of("status", "success", "message", "All memories reset successfully"));
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			logger.error("Error resetting memories", e);
 			return ResponseEntity.badRequest().body(Map.of("status", "error", "message", e.getMessage()));
 		}
