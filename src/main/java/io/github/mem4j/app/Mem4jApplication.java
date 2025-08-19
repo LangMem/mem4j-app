@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.github.mem4j.app;
+package io.github.mem4j.app;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

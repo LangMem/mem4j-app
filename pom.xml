@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
          http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.github.mem4j</groupId>
+    <groupId>io.github.mem4j</groupId>
     <artifactId>mem4j-app</artifactId>
     <version>0.1.0</version>
     <packaging>jar</packaging>
-    
+
     <name>Mem4j Application</name>
     <description>Main Spring Boot application for Mem4j</description>
-    
+
     <licenses>
         <license>
             <name>Apache License, Version 2.0</name>
@@ -20,13 +20,13 @@
             <distribution>repo</distribution>
         </license>
     </licenses>
-    
+
     <scm>
         <connection>scm:git:https://github.com/langMem/mem4j-app.git</connection>
         <developerConnection>scm:git:https://github.com/langMem/mem4j-app.git</developerConnection>
         <url>https://github.com/langMem/mem4j-app</url>
     </scm>
-    
+
     <issueManagement>
         <system>Github Issues</system>
         <url>https://github.com/langMem/mem4j-app/issues</url>
@@ -35,7 +35,7 @@
         <system>Github Actions</system>
         <url>https://github.com/langMem/mem4j-app/actions</url>
     </ciManagement>
-    
+
     <developers>
         <developer>
             <name>Aias00</name>
@@ -48,7 +48,7 @@
             <url>https://github.com/yuluo-yx</url>
         </developer>
     </developers>
-    
+
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
@@ -57,30 +57,30 @@
         <spring.version>6.1.1</spring.version>
         <jackson.version>2.15.3</jackson.version>
         <openai.version>0.12.0</openai.version>
-        
+
         <!-- Vector Store versions -->
         <qdrant.version>1.13.0</qdrant.version>
         <elasticsearch.version>8.11.0</elasticsearch.version>
         <weaviate.version>5.4.0</weaviate.version>
         <neo4j.version>5.28.9</neo4j.version>
-        
+
         <!-- Test versions -->
         <junit.version>5.10.0</junit.version>
         <mockito.version>5.7.0</mockito.version>
         <slf4j.version>2.0.9</slf4j.version>
         <logback.version>1.4.11</logback.version>
-        
+
         <spring-ai-alibaba.version>1.0.0.2</spring-ai-alibaba.version>
         <mem4j.version>0.1.0</mem4j.version>
     </properties>
-    
+
     <dependencies>
         <!-- Spring Boot Starters -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-        
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
@@ -95,12 +95,12 @@
 
         <!-- Mem4j Spring Boot Starter (includes core and autoconfigure) -->
         <dependency>
-            <groupId>com.github.mem4j</groupId>
+            <groupId>io.github.mem4j</groupId>
             <artifactId>mem4j-spring-boot-starter</artifactId>
-            <version>${mem4j.version}</version>
+            <version>0.1.0</version>
         </dependency>
     </dependencies>
-    
+
     <dependencyManagement>
         <dependencies>
             <!-- Spring Boot BOM -->
@@ -111,7 +111,7 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-            
+
             <!-- Spring AI Alibaba BOM -->
             <dependency>
                 <groupId>com.alibaba.cloud.ai</groupId>
@@ -122,7 +122,7 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
-    
+
     <build>
         <plugins>
             <plugin>
@@ -137,7 +137,7 @@
                     </execution>
                 </executions>
             </plugin>
-            
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -152,7 +152,7 @@
                     </compilerArgs>
                 </configuration>
             </plugin>
-            
+
             <plugin>
                 <groupId>io.spring.javaformat</groupId>
                 <artifactId>spring-javaformat-maven-plugin</artifactId>

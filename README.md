@@ -284,7 +284,7 @@ mem4j-app/
 ├── src/
 │   └── main/
 │       ├── java/
-│       │   └── com/github/mem4j/app/
+│       │   └── io/github/mem4j/app/
 │       │       ├── Mem4jApplication.java      # Main application class
 │       │       └── controllers/
 │       │           └── MemoryController.java   # REST API controller
@@ -337,7 +337,7 @@ Enable debug logging for troubleshooting:
 ```yaml
 logging:
   level:
-    com.github.mem4j: DEBUG
+    io.github.mem4j: DEBUG
     org.springframework: INFO
 ```
 

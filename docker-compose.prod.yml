@@ -20,7 +20,7 @@ services:
     environment:
       - SPRING_PROFILES_ACTIVE=prod
       - LOGGING_LEVEL_ROOT=WARN
-      - LOGGING_LEVEL_COM_GITHUB_MEM4J=INFO
+      - LOGGING_LEVEL_IO_GITHUB_MEM4J=INFO
       - JAVA_OPTS=-Xmx2g -Xms1g -XX:+UseG1GC -XX:+UseContainerSupport -XX:MaxRAMPercentage=75.0 -XX:+ExitOnOutOfMemoryError -Djava.security.egd=file:/dev/./urandom
     deploy:
       resources:
