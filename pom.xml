@@ -71,7 +71,7 @@
         <logback.version>1.4.11</logback.version>
 
         <spring-ai-alibaba.version>1.0.0.2</spring-ai-alibaba.version>
-        <mem4j.version>0.1.0</mem4j.version>
+        <mem4j.version>0.1.0.RC1</mem4j.version>
     </properties>
 
     <dependencies>
@@ -97,7 +97,7 @@
         <dependency>
             <groupId>io.github.mem4j</groupId>
             <artifactId>mem4j-spring-boot-starter</artifactId>
-            <version>0.1.0</version>
+            <version>0.1.0.RC1</version>
         </dependency>
     </dependencies>
 
